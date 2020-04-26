@@ -31,14 +31,10 @@ export const mutations = {
     ;(state.cart = []), (state.cartUIStatus = "idle")
   },
   addToCart: (state, payload) => {
-    let itemfound = false
-    state.cart.forEach(el => {
-      if (el.id === payload.id) {
-        el.quantity += payload.quantity
-        itemfound = true
-      }
-    })
-    if (!itemfound) state.cart.push(payload)
+    let itemfound = state.cart.find(el => el.id === payload.id)
+    itemfound
+      ? (itemfound.quantity += payload.quantity)
+      : state.cart.push(payload)
   }
 }
 
@@ -65,11 +61,11 @@ export const actions = {
         .then(res => {
           if (res.status === 200) {
             commit("updateCartUI", "success")
-            setTimeout(() => commit("clearCart"), 3000)
+            setTimeout(() => commit("clearCart"), 5000)
           } else {
             commit("updateCartUI", "failure")
             // allow them to try again
-            setTimeout(() => commit("updateCartUI", "idle"), 3000)
+            setTimeout(() => commit("updateCartUI", "idle"), 5000)
           }
 
           console.log(JSON.stringify(res, null, 2))

@@ -52,7 +52,7 @@
 
 <script>
 import { mapState } from "vuex";
-import StarRating from "vue-star-rating";
+import StarRating from "vue-star-rating/src/star-rating.vue";
 import AppFeaturedProducts from "~/components/AppFeaturedProducts.vue";
 
 export default {
@@ -76,7 +76,7 @@ export default {
   methods: {
     cartAdd() {
       let item = this.product;
-      item.quantity = this.quantity;
+      item.quantity = parseInt(this.quantity);
       this.tempcart.push(item);
       this.$store.commit("addToCart", {...item});
     }
